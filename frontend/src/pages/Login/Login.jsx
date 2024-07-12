@@ -1,51 +1,79 @@
-import React from 'react'
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import useLogin from "../../Hooks/useLogin";
 
 const Login = () => {
-  return  <div className='flex flex-col items-center justify-center min-w-96 mx-auto'> 
+const [username,setUsername] =useState('');
+const [password,setPassword] =useState('');
 
-         < div className='w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
-				<h1 className='text-3xl font-semibold text-center text-gray-300'>
-					Login
-					<span className='text-blue-500'> ChatApp</span>
-				</h1>
+const {loading,login} = useLogin();
 
-                <form>
-                    <div>
-                    <label className='label p-2'>
-							<span className='text-base label-text'>Username</span>
-					</label>
-                    <input type='text' className='w-full input input-bordered h-10' placeholder='Enter Username' />
-                    </div>
-                    <div> 
-                    <label className='label p-2'>
-                            <span className='text-base label-text'>Password</span>
-                    </label>
-                    <input type='password' className='w-full input input-bordered h-10' placeholder='Enter Password' />
-                    </div>
+const handleSubmit = async(e) => {
+    e.preventDefault();
+    await login(username,password);
+};
 
-                    {/* <a href='#' className='text-sm text-blue-500'>Forgot Password?</a> */}
+  return (
+    <div className="flex flex-col items-center justify-center min-w-96 mx-auto">
+      <div className="w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0">
+        <h1 className="text-3xl font-semibold text-center text-gray-300">
+          Login
+          <span className="text-blue-500"> ChatApp</span>
+        </h1>
 
-                    <a href='#' className='text-sm  hover:underline hover:text-blue-600 mt-2 inline-block'>
-                    {"Don't"} have an account?</a>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label className="label p-2">
+              <span className="text-base label-text">Username</span>
+            </label>
+            <input
+              type="text"
+              className="w-full input input-bordered h-10"
+              placeholder="Enter Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="label p-2">
+              <span className="text-base label-text">Password</span>
+            </label>
+            <input
+              type="password"
+              className="w-full input input-bordered h-10"
+              placeholder="Enter Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-                    <div>
-                        <button className='btn btn-block btn-sm mt-2'>Login</button>
-                    </div>
-                </form>
-            </div>    
+
+          <Link
+            to={"/signup"}
+            className="text-sm  hover:underline hover:text-blue-600 mt-2 inline-block"
+          >
+            {"Don't"} have an account?
+          </Link>
+
+          <div>
+            <button className="btn btn-block btn-sm mt-2"
+            disabled={loading}
+            >{loading ? <span>'Loading loading-spinner'</span> : 'Login'}</button>
+          </div>
+        </form>
+      </div>
     </div>
-}
+  );
+};
 
 export default Login;
-
-
 
 //starter code for this file
 
 // import React from 'react'
 
 // const Login = () => {
-//   return  <div className='flex flex-col items-center justify-center min-w-96 mx-auto'> 
+//   return  <div className='flex flex-col items-center justify-center min-w-96 mx-auto'>
 
 //          < div className='w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
 // 				<h1 className='text-3xl font-semibold text-center text-gray-300'>
@@ -60,7 +88,7 @@ export default Login;
 // 					</label>
 //                     <input type='text' className='w-full input input-bordered h-10' placeholder='Enter Username' />
 //                     </div>
-//                     <div> 
+//                     <div>
 //                     <label className='label p-2'>
 //                             <span className='text-base label-text'>Password</span>
 //                     </label>
@@ -76,7 +104,7 @@ export default Login;
 //                         <button className='btn btn-block btn-sm mt-2'>Login</button>
 //                     </div>
 //                 </form>
-//             </div>    
+//             </div>
 //     </div>
 // }
 
